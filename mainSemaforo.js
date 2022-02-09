@@ -7,6 +7,7 @@ const verde = document.getElementById('verde');
 const auto = document.getElementById('auto');
 const tudoof = document.getElementById('offtudo');
 let iidauto = null;
+let iidautored = null;
 
 
 function onvermelho() {
@@ -26,16 +27,24 @@ const onverde = () => {
     semaforo.src = './img/verde.png'
 }
 
-function offtudo() {   /* funcao para desligar o semaforo*/
-    semaforo.src = './img/desligado.png'
+function offtudo() { /* funcao para desligar o semaforo*/
+    if (!verderepetidor || vermelhorepetidor) {
+
+
+        semaforo.src = './img/desligado.png'
+    }
+
 }
+
 
 const verderepetidor = () => {
 
     return semaforo.src.includes('verde');
 }
 
-
+const vermelhorepetidor = () => {
+    return semaforo.src.includes('vermelho');
+}
 
 /*atomatizaçao do semaforo*/
 
@@ -57,19 +66,30 @@ function atuosemaforo() {
     }
 }
 
+function atuosemaforored() {
+
+    if (vermelhorepetidor()) {
+
+        return semaforo.src = './img/verde.png';
+    } else {}
+}
+
 
 
 const automatico = () => {
-    if(iidauto == null){
-        iidauto = setInterval(atuosemaforo, 500);
+    if (iidauto == null || iidautored == null) {
+        iidauto = setInterval(atuosemaforo, 1000);
+        iidautored = setInterval(atuosemaforored, 3000);
         auto.textContent = 'parar'
-    }else{
+    } else {
 
         clearInterval(iidauto);
+        clearInterval(iidautored);
         auto.textContent = 'auto';
         iidauto = null;
+        iid = null;
     }
-    
+
 
 }
 
